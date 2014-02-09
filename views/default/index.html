@@ -1,0 +1,124 @@
+{{extend 'layout.html'}}
+
+<!-- Modal -->
+<div id="myModal" class="modal hide fade" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+<div class="modal-header">
+<button type="button" class="close" data-dismiss="modal" aria-hidden="true">×</button>
+<h3 id="myModalLabel">Online Notes Interface</h3>
+</div>
+<div class="modal-body">
+<p>
+<ul>
+<li>You can make Notes<br/>The various options are : 
+<ul><li><button class="btn btn-success">Create</button></li>
+<li><button class="btn btn-success">Edit</button></li>
+<li><button class="btn btn-success">Delete</button></li>
+<li><button class="btn btn-success">View by Tags</button></li></ul>
+</li>
+<li>You can make Tasks<br/>The various options are : 
+<ul><li><button class="btn btn-success">Create</button></li>
+<li><button class="btn btn-success">Edit</button></li>
+<li><button class="btn btn-success">Delete</button></li>
+<li><button class="btn btn-success">Search Tasks</button></li></ul>
+</li>
+</ul></p>
+</div>
+<div class="modal-footer">
+<button class="btn" data-dismiss="modal" aria-hidden="true">Close</button>
+<button class="btn btn-primary" onclick="document.location='{{=URL(r=request,f='help')}}';">Go to Help</button>
+</div>
+</div>
+<html>
+<title>Welcome {{=auth.user.first_name}}</title>
+{{if auth.user.pic != '':}}
+<img style="float:right" class="image-circle" width="200px" src={{=URL('download',args=auth.user.pic)}} alt="Error No photo"></img>
+{{else:}}
+{{=A('Add Profile Pic',_href=URL('/user/profile'))}}
+{{pass}}
+
+<h3>Welcome {{=auth.user.first_name}}</h3>
+<table >
+<col width="500">
+<col width="500">
+<thead>
+<th><b>NOTES</b></th>
+<th><b>TASKS</b></th>
+</thead>
+<tr>
+<td>
+{{ if len(a)>0:}}
+{{x='Your Notes are '}}
+{{else:}}
+{{x='You don\'t have any notes right now'}}
+{{pass}}
+
+<h5>{{=x}}</h5>
+<table class='table table-hover'>
+{{for  i in range(len(a)):}}
+<tr>
+<td>
+<li><a href="{{=URL(r=request,f='show',args=(a[i]['title']))}}" data-toggle="tooltip" data-trigger="hover" title="{{=a[i]['description']}}">{{=a[i]['title']}}</a></li>
+</td>
+</tr>
+{{pass}}
+</td>
+</table>
+<td>
+{{if len(c)==0:}}
+{{x='You don\'t have any tasks right now'}}
+<h5>{{=x}}</h5>
+{{pass}}
+
+{{if len(c)>0:}}
+
+{{if q==1:}}
+<h5 >Pending Task Are :</h5>
+
+<table class="table table-hover" >
+
+{{for i in range(len(q1)):}}
+<tr><td><li>
+{{if q1[i]['done']==False:}}
+<a href="{{=URL(r=request,f='shtask',args=(q1[i]['tit']))}}" data-toggle="tooltip" data-trigger="hover" title="{{=q1[i]['description']}}">{{=q1[i]['tit']}}</a>
+{{pass}}
+</li></td></tr>
+{{pass}}
+</table>
+{{pass}}
+{{pass}}
+</li>
+{{if q==1:}}
+<br/>
+{{pass}}
+
+{{if p==1:}}
+<h5>Completed Tasks :</h5>
+<table class="table table-hover" >
+{{for i in range(len(c)):}}
+{{if c[i]['done']==True:}}
+<tr><td><li>
+<a href="{{=URL(r=request,f='shtask',args=(c[i]['tit']))}}" data-toggle="popover" data-trigger="hover"  title="{{=c[i]['description']}}">{{=c[i]['tit']}}</a>
+{{pass}}
+</li></td></tr>
+{{pass}}
+{{pass}}
+</table>
+<table class="table table-hover" >
+{{if p==1:}}
+<br/>
+{{pass}}
+{{if r==1:}}
+<h5 >Expired tasks Are :</h5>
+{{for i in range(len(r1)):}}
+<tr><td><li>
+{{if r1[i]['done']==False:}}
+<a href="{{=URL(r=request,f='shtask',args=(r1[i]['tit']))}}" data-toggle="popover" data-trigger="hover" title="{{=r1[i]['description']}}">{{=r1[i]['tit']}}</a>
+{{pass}}
+</li></td></tr>
+{{pass}}
+{{pass}}
+</table>
+</td></tr>
+</table>
+{{pass}}
+</html>

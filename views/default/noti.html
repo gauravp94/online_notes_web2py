@@ -1,0 +1,45 @@
+{{extend 'layout.html'}}
+<html>
+
+{{if len(d)>0:}}
+<h4> Pending Requests : </h4>
+	<table>
+	<thead class>
+
+		    <col width='450'>
+		    <col width='450'>
+	<th width="450">Name</th>
+	<th width="450">Email</th>
+	</thead>
+	</table>
+	{{for i in range(len(d)):}}
+	<br/>
+	<div class="accordion" id="accordion2">
+	  <div class="accordion-group">
+	      <div class="accordion-heading">
+	            <a style='color:black'class="accordion-toggle" data-toggle="collapse" data-parent="#accordion2" href="#collapse{{=i}}">
+		    <table>
+		    
+		    <col width='450'>
+		    <col width='450'>
+		    <tr><td><i class="icon-plus"></i>&nbsp;{{=a[i]['first_name']}}&nbsp;{{=a[i]['last_name']}}</td>
+		    <td>{{=a[i]['email']}}</td></tr></table>
+</a>
+	      </div>
+	      <div id="collapse{{=i}}" class="accordion-body collapse in">
+	            <div class="accordion-inner">
+		    <table style="float:right">
+		    <tr><td>
+	<button style="float:right" class="btn btn-success" onclick="document.location='{{=URL(r=request,f='reqaccept',args=(d[i]['frm'],2))}}';">Accept</button>&nbsp;&nbsp;&nbsp;
+	</td><td><button style="float:right" class="btn btn-danger" onclick="document.location='{{=URL(r=request,f='reqaccept',args=(d[i]['frm'],3))}}';">Decline</button>&nbsp;&nbsp;
+	</td></tr></table>     
+	</div>
+	</div>
+	</div>
+
+{{pass}}
+{{pass}}
+{{if len(d)==0:}}
+<h3> No requests </h3>
+{{pass}}
+</html>

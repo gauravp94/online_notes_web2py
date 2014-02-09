@@ -1,0 +1,44 @@
+{{extend 'layout.html'}}
+{{if len(fin):}}
+<table class='table'>
+<thead>
+<th>Username</th>
+<th></th>
+</thead>
+{{for i in range(len(fin)):}}
+<tr>
+{{if a[i]==0 and b[i]==0 :}}
+{{x=0}}
+{{for j in range(len(s)):}}
+{{if fin[i]['email'] == s[j]['tom']:}}
+{{x=1}}
+{{pass}}
+{{if fin[i]['email'] == s[j]['frm']:}}
+{{x=2}}
+{{pass}}
+{{pass}}
+{{if x==0:}}
+<td>{{=fin[i]['first_name'] }}</td>
+<td><button style="float:right" class="btn btn-primary" onclick="document.location='{{=URL(r=request,f='reqsent',args=fin[i]['email'])}}';">Add Friend</button></td>
+{{pass}}
+{{if x==1:}}
+<td>{{=fin[i]['first_name']}} </td>
+<td><button style="float :right"class="btn btn-warning" onclick="document.location='{{=URL(r=request,f='reqdel',args=fin[i]['email'])}}';">Cancel Friend Request</button></td>
+{{pass}}
+{{if x==2:}}
+<td>{{=fin[i]['first_name']}} </td>
+<td >&nbsp;&nbsp;&nbsp;<button style="float:right"class="btn btn-danger" onclick="document.location='{{=URL(r=request,f='reqaccept',args=(fin[i]['email'],3))}}';">Decline Friend Request</button>
+<span style="float:right">&nbsp;&nbsp;&nbsp;&nbsp;</span>
+<button style="float:right"class="btn btn-success" onclick="document.location='{{=URL(r=request,f='reqaccept',args=(fin[i]['email'],2))}}';">Accept Friend Request</button></td>{{pass}}
+{{pass}}
+{{if a[i]!=0 or b[i]!=0:}}
+<td>{{=A(fin[i]['first_name'],_href=URL('prof',args=(fin[i]['first_name'],fin[i]['email'])))}}</td>
+<td><button class="btn btn-danger" onclick="document.location='{{=URL(r=request,f='delask',args=fin[i]['email'])}}';">Delete Friend</button></td>
+{{pass}}
+</tr>
+{{pass}}
+</table>
+{{else:}}
+<h3>No matching results !!</h3>
+{{=A('Go Back to Search',_href=URL('sfriends'))}}
+{{pass}}

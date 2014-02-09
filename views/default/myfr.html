@@ -1,0 +1,26 @@
+{{extend 'layout.html'}}
+{{if len(fina) or len(finb):}}
+<table class='table table-hover'>
+<thead>
+<th>Name</th>
+<th>Email</th>
+</thead>
+{{for i in range(len(fina)):}}
+<tr><td >{{=A(fina[i]['first_name']+' '+fina[i]['last_name'],_href=URL('prof',args=(fina[i]['first_name'],fina[i]['email'])))}}</td>
+<td>{{=A(fina[i]['email'],_href=URL('prof',args=(fina[i]['first_name'],fina[i]['email'])))}}</td>
+<td><button onclick="document.location='{{=URL(r=request,f='delask',args=fina[i]['email'])}}';">Delete Friend</button></td>
+</tr>
+{{pass}}
+{{for i in range(len(finb)):}}
+<tr>
+<td>{{=A(finb[i]['first_name']+' '+finb[i]['last_name'],_href=URL('prof',args=(finb[i]['first_name'],finb[i]['email'])))}}</td>
+<td>{{=A(finb[i]['email'],_href=URL('prof',args=(finb[i]['first_name'],finb[i]['email'])))}}</td>
+<td><button onclick="document.location='{{=URL(r=request,f='delask',args=finb[i]['email'])}}';">Delete Friend</button></td>
+</tr>
+{{pass}}
+</table>
+{{else:}}
+<h3> It's Getting Lonely here </h3>
+<td>{{=A('Add Friends',_href=URL('sfriends'))}}</td>
+{{pass}}
+

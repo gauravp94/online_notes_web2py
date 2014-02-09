@@ -1,0 +1,36 @@
+{{extend 'layout.html'}}
+<html>
+{{if len(fin)>0:}}
+<table class="table table-hover">
+<thead>
+<th> <p class="lead"><h3>Title</h3></p></th>
+<th> <p class="lead"><h3>Description</h3></p></th>
+<th><p class="lead"><h3>Type of Note</h3></p></th>
+<th></th>
+</thead>
+<tr>
+{{for i in range(len(fin)):}}
+{{if fin[i]['priority']=='Private':}}
+<td>{{=fin[i]['title']}}</td>
+<td></td>
+<td><button class="btn btn-danger">Private</button></td>
+<td></td>
+<td></td>
+{{pass}}
+</tr>
+{{pass}}
+
+<tr>
+{{for i in range(len(fin)):}}
+{{if fin[i]['priority']=='Public':}}
+<td>{{=fin[i]['title']}}</td>
+<td>{{=fin[i]['description']}}</td>
+<td><button class="btn btn-success">Public</button></td>
+<td><button onclick="document.location='{{=URL(r=request,f='friendshow',args=(fin[i]['id'],fin[i]['authoris']))}}';">Show</button></td>
+<td><button  onclick="document.location='{{=URL(r=request,f='ma1',args=fin[i]['id'])}}';">Mail a copy</button></td>
+{{pass}}
+</tr>
+{{pass}}
+</table>
+{{pass}}
+</html>
